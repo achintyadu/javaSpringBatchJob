@@ -29,20 +29,24 @@ public class ApiService {
                     .block();
 
             if (apiDataArray != null && apiDataArray.length > 0) {
-                ApiData apiData = apiDataArray[0];
-                System.out.println("=====================================");
-                System.out.println("API Data Received:");
-                System.out.println("Title: " + apiData.getTitle());
-                System.out.println("User ID: " + apiData.getUserId());
-                System.out.println("Body: " + apiData.getBody());
-                System.out.println("=====================================");
+                int totalItems = apiDataArray.length;
+                int savedCount = 0;
                 
-                // Save to MongoDB
-                ApiData savedData = apiDataRepository.save(apiData);
-                System.out.println("Data saved to MongoDB with ID: " + savedData.getId());
+                for (ApiData apiData : apiDataArray) {
+                    try {
+                        apiDataRepository.save(apiData);
+                        savedCount++;
+                    } catch (Exception e) {
+                        System.err.println("Failed to save item: " + e.getMessage());
+                    }
+                }
+                
+                System.out.println("API Items: " + totalItems + " | Saved to DB: " + savedCount);
+            } else {
+                System.out.println("No data received from API");
             }
         } catch (Exception e) {
-            System.err.println("Error fetching data: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         }
     }
 }

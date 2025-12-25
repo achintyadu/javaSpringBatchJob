@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class JavaprojectApplication {
 
 	public static void main(String[] args) {
-		System.out.println("Scheduler Started Running");
 		SpringApplication.run(JavaprojectApplication.class, args);
 	}
 

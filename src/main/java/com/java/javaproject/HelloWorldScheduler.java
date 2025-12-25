@@ -13,7 +13,11 @@ public class HelloWorldScheduler {
 
     @Scheduled(fixedRate = 5000)
     public void fetchDataFromApi() {
-        System.out.println("Fetching data from API...");
-        apiService.fetchAndSaveData();
+        System.out.println("\n[" + java.time.LocalDateTime.now() + "] Scheduler Running...");
+        try {
+            apiService.fetchAndSaveData();
+        } catch (Exception e) {
+            System.err.println("Scheduler failed: " + e.getMessage());
+        }
     }
 }
